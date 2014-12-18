@@ -1,0 +1,8 @@
+//This is going to be the template for the class/tabs
+//So they can be added dynamically
+- var class1 = #{class1_title}
+- var class2 = #{class2_title}
+
+if class1
+    li(class="active"): a(href="#class1" data-toggle="tab") #{class1_title}
+    //li: a(href="#class2" data-toggle="tab") #{class2}

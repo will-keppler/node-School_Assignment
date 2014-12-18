@@ -38,9 +38,9 @@ app.get('/', function(req, res){
     //console.log("app.get(); jadeAssignments[0] = " + JSON.stringify(jadeAssignments[0]));
     //console.log("app.get(); jadeAssignments[1] = " + JSON.stringify(jadeAssignments[1]));
 	res.render('index.jade', { //This is the object I'm passign to jade.
-	class1_title: "IT Security",
+	class1_title: tab1_name,
 	class1: jadeAssignments[0],
-	class2_title: "Written Analysis",
+	class2_title: tab2_name,
 	class2: jadeAssignments[1]
 	});
     //have to send tab1_name and tab2_name to jade to fill in the template for the tabs.....
