@@ -1,0 +1,31 @@
+{
+  "class": "Written Analysis",
+  "current_week": "3",
+  "total_weeks": "12",
+  "assignments": [
+    {
+      "name": "discussion",
+      "notes": "##need to respond to 2 others...",
+      "status": "",
+      "permanent": "0"
+    },
+    {
+      "name": "Forum",
+      "notes": "##posted my response",
+      "status": "",
+      "permanent": "0"
+    },
+    {
+      "name": "Project part 2",
+      "notes": "started part 2...",
+      "status": "",
+      "permanent": "0"
+    },
+    {
+      "name": "Lab",
+      "notes": "#finish doing the lab ...",
+      "status": "",
+      "permanent": "0"
+    }
+  ]
+}

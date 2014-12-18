@@ -1,0 +1,64 @@
+
+body {
+ background-color: white;
+ max-width: 600px;
+}
+
+/*The assignment containers*/
+.assignment_container {
+ background-color: #FE7300;
+ margin: 5px;
+ margin-top: 7px;
+ width: 100%;
+ padding-left: 15px;
+}
+
+/*The tabs get rid of the dots */
+ul li {
+ list-style: none;
+ display: inline;
+}
+
+ul li a{
+ font-size: large;
+}
+
+/*===========================================*/
+/* Hide the tab pane content */
+
+.tab-pane{
+ visibility: hidden;
+ display: none;
+}
+
+.tab-pane.active{
+ visibility: visible;
+ display: inline;
+ float: left;
+}
+
+/*===========================================*/
+
+.notes {
+ width: 90%;
+ height: 400px;
+ font-size: 30px;
+ margin: 2px;
+ margin-left: 5px;
+ line-height: 30px;
+}
+
+/*===========================================*/
+/*  Override the bx-viewport so i can see the whole assignment */
+div.bx-viewport[style]{
+ width: 430px !important;
+}
+/*===========================================*/
+/* This is for the modal */
+.modal {
+ width: 300px;
+ position: fixed;
+ left: 300px;
+ top: 200px;
+}
+

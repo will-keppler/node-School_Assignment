@@ -1,0 +1,21 @@
+{
+  "name": "School_Web_App",
+  "version": "0.0.1",
+  "description": "A web app to keep track of assignments in my school classes on my android phone.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": "",
+  "author": "will",
+  "license": "BSD",
+  "dependencies": {
+	"express": "4.9",
+	"jade": "1.7.0",
+	"jasmine-node": "1.14.5",
+	"jsonfile": "2.0.0",
+	"body-parser": "1.9.2",
+	"socket.io": "1.2.1"
+  }
+}

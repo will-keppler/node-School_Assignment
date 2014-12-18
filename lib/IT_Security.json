@@ -1,0 +1,31 @@
+{
+  "class": "IT Security",
+  "current_week": "3",
+  "total_weeks": "12",
+  "assignments": [
+    {
+      "name": "discussion",
+      "notes": "#Something else to write...",
+      "status": "",
+      "permanent": "0"
+    },
+    {
+      "name": "Forum",
+      "notes": "#Posted my response..",
+      "status": "",
+      "permanent": "0"
+    },
+    {
+      "name": "Project part 1",
+      "notes": "started part 1...\n\nAlmost done...",
+      "status": "",
+      "permanent": "0"
+    },
+    {
+      "name": "Lab",
+      "notes": "#finish the lab\n\n#reach ch 8",
+      "status": "",
+      "permanent": "0"
+    }
+  ]
+}
