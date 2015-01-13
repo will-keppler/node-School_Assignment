@@ -1,0 +1,31 @@
+{
+  "class": "Security Policies",
+  "current_week": "3",
+  "total_weeks": "12",
+  "assignments": [
+    {
+      "name": "discussion",
+      "notes": "#Started the discussion...",
+      "status": "",
+      "permanent": "0"
+    },
+    {
+      "name": "Forum",
+      "notes": "#Posted my response....\n\n#Respond to 2 others",
+      "status": "",
+      "permanent": "0"
+    },
+    {
+      "name": "Project part 2",
+        "notes": "#Finish reading...",
+      "status": "",
+      "permanent": "0"
+    },
+    {
+      "name": "Lab",
+      "notes": "#Something else to write...\n\n#new data...",
+      "status": "",
+      "permanent": "0"
+    }
+  ]
+}

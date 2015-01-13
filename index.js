@@ -175,7 +175,7 @@ for(var i = 0; i < jsonObjects.length; i++){
     //if i === 0 { tab1_name = jsonObjects[i]['class'] }
     //if i === 1 { tab2_name = jsonObjects[i]['class'] }
     //console.log(tab0_name)
-    //console.log(tab1_name)
+    //conso$le.log(tab1_name)
     if(i === 0){
         tab1_name = jsonObjects[i]['class'];
         console.log("tab1_name = " + tab1_name);
