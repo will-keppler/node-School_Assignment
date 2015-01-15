@@ -91,7 +91,7 @@ app.post('/newAssignment', function(req, res){//app.post because it is creating 
 });
 
 //call load_lib_files();
-load_lib_files();
+//load_lib_files();
 //=================================================================
 //socket.io connection
 io.on('connection', function(socket){
@@ -127,6 +127,47 @@ io.on('connection', function(socket){
             //now i need to take the jsonobj and save it to the correct file.
             jf.writeFileSync(file_path, jsonobj);
         }//end for loop jsonObjects[]
+    });
+    
+    socket.on('next_week', function(current_tab){
+        //this event will perform all of the required tasks on the current tab
+        //console.log("Socket.on(next_week); jsonObjects[0] = " + jsonObjects[0]);
+        //console.log("socket.on(next_week) = " + current_tab);
+        
+         var current_class = JSON.parse(current_tab);
+        console.log("socket.on(next_week); current_class = " + current_class['_class']);
+        for(var i = 0; i < jsonObjects.length; i++){
+            var jsonobj = jsonObjects[i];
+            var jsonobj_class = jsonobj['class'].trim().toString();
+            console.log("socket.on(next_week); jsonobj = " + jsonobj);
+            console.log("socket.on(next_week); jsonobj_class = " + jsonobj_class);
+            //break;
+            if(current_class['_class'].indexOf(jsonobj_class) >= 0){
+                //if the current jsonObjects[class]
+                //matches the current_tab passed in
+                //then this is the jsonObject i want to perform the actions on for next_week
+                console.log("socket.on(next_week); inside if(currentclass...)");
+                
+                //Remove all assignments whose 'permanent' attribute is set to false from 'jsonobj'
+                //i need all of the 'assignments' in the current jsonobj
+                var jsonasign = jsonobj['assignments'];
+                console.log("socket.on(next_week); inside if(); jsonasign = " + jsonasign);
+                //loop through all the jsonasign objects and check if their 'permanent' property
+                //is === 1; if it is 1 then keep it, just delete the notes. if it is 0
+                //then delete it.
+                console.log("===========" + jsonasign[0]['permanent']);
+                for(var i = 0; i < jsonasign.length; i++){
+                    console.log("jsonasign[i]['permanent'] = " + jsonasign[i]['permanent']);
+                    //check each permanent attribute
+                    if (jsonasign[i]["permanent"] === "0"){
+                        //delete the assignment and notes
+                        console.log("delete the assignment and notes = " + jsonasign[i]);
+                    }
+                }
+                //
+                break;
+            }
+        }//end of for loop
     });
 });
 

@@ -21,7 +21,7 @@
 14 error You can get their info via:
 14 error     npm owner ls School_Web_App
 14 error There is likely additional logging output above.
-15 error System Linux 3.12.28+
+15 error System Linux 3.12.35+
 16 error command "/opt/node/bin/node" "/opt/node/bin/npm" "start"
 17 error cwd /media/BACKUP/Programming/Node/Node_Programs/bxslider_School_Web_App
 18 error node -v v0.10.2

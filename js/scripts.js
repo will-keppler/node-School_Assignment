@@ -69,9 +69,10 @@ $("#save_assignment").click(function(){
 
 //======================click listener for next week button
 $("#next_week").click(function(){
-    console.log("Just clicked '#next_week' button click listener");
+    console.log("Just clicked '#next_week' button click listener;");
     var active_class = $("li.active").text().trim(); //Get the active class
-    var asignment_objects = [];//variable to store the assignment objects i want to save.
+    console.log("#next_week; active_class = " + active_class);
+    /*var asignment_objects = [];//variable to store the assignment objects i want to save.
     
     if(active_class === "Security Policies"){
         $("#class1 li.assignment_container").each(function( index ){
@@ -84,7 +85,7 @@ $("#next_week").click(function(){
                 //But now it does not filter out the bx-clone <li elements....
                 //console.log("this.val() = " + $(this).val());
                 //console.log("this.parent().parent() = " + $(this).parent().parent().attr("class"));
-                asignment_objects.push($(this).text());
+                asignment_objects.push($(this));
             }
         });
     }else if(active_class === "Social Psychology"){
@@ -100,8 +101,9 @@ $("#next_week").click(function(){
                 asignment_objects.push($(this).text());
             }
         });
-    }//Have to figure a way to compare the active class to the names dynamically...so there are no hard coded strings...
+    }*///Have to figure a way to compare the active class to the names dynamically...so there are no hard coded strings...
     //Now i have to take the 'assignments'[] object and remove the assignments that do not have the 
     //permanent attribute set to true
-    console.log("asignment_objects = " + JSON.stringify(asignment_objects));
+    //console.log("asignment_objects = " + JSON.stringify(asignment_objects));
+    socket.emit('next_week', JSON.stringify({_class: active_class }));
 });
