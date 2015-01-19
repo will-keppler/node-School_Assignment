@@ -138,6 +138,7 @@ io.on('connection', function(socket){
         console.log("socket.on(next_week); current_class = " + current_class['_class']);
         for(var i = 0; i < jsonObjects.length; i++){
             var jsonobj = jsonObjects[i];
+            var new_assignments = [];
             var jsonobj_class = jsonobj['class'].trim().toString();
             console.log("socket.on(next_week); jsonobj = " + jsonobj);
             console.log("socket.on(next_week); jsonobj_class = " + jsonobj_class);
@@ -159,12 +160,25 @@ io.on('connection', function(socket){
                 for(var i = 0; i < jsonasign.length; i++){
                     console.log("jsonasign[i]['permanent'] = " + jsonasign[i]['permanent']);
                     //check each permanent attribute
+                    //jsonasign[i] is the current assignment object for the current class/tab
                     if (jsonasign[i]["permanent"] === "0"){
                         //delete the assignment and notes
                         console.log("delete the assignment and notes = " + jsonasign[i]);
+                        
+                        //new_assignments will be the new assignments array for jsonobj
+                    }else {
+                        new_assignments.push(jsonasign[i]);
                     }
                 }
                 //
+                console.log("right before break(); new_assignments = " + new_assignments);
+                //set the jsonobject['assignments'] to new_assignments array
+                jsonobj['assignments'] = new_assignments;
+                //should also have to save it to the file...
+                console.log("JSON.stringify jsonobj = " + JSON.stringify(jsonobj));
+                var file_path = __dirname + "/lib/" + jsonobj_class.replace(" ", "_") + ".json";
+                console.log("file_path = " + file_path);
+                jf.writeFileSync(file_path, jsonobj);
                 break;
             }
         }//end of for loop

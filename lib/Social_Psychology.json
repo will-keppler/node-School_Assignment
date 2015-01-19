@@ -4,26 +4,14 @@
   "total_weeks": "12",
   "assignments": [
     {
-      "name": "discussion",
-      "notes": "#Something else to write...\n\n#new data...",
-      "status": "",
-      "permanent": "0"
-    },
-    {
       "name": "Forum",
-      "notes": "#Posted my response..",
+      "notes": "#Respond to 2 others...\n\n#In the event of risk...",
       "status": "",
       "permanent": "0"
     },
     {
-      "name": "Project part 1",
-      "notes": "started part 1...\n\nAlmost done...",
-      "status": "",
-      "permanent": "0"
-    },
-    {
-      "name": "Lab",
-      "notes": "#finish the lab\n\n#read ch ch 8",
+      "name": "discussion",
+      "notes": "#",
       "status": "",
       "permanent": "0"
     }
