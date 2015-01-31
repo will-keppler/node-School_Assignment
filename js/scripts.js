@@ -2,7 +2,7 @@ var socket;
 $(document).ready(function(){
   	$('.bxslider').bxSlider({
 		mode: 'horizontal',
-		slideWidth: 400,
+		slideWidth: 350,
 		slideMargin: 40,
         maxSlides: 1,
 		pager: false,

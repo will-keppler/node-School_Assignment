@@ -4,14 +4,26 @@
   "total_weeks": "12",
   "assignments": [
     {
-      "name": "Forum",
-      "notes": "#Respond to 2 others...\n\n#In the event of risk...",
+      "name": "Tomorrow",
+      "notes": "##Keep reading...\n\n#lesson is done.",
+      "status": "",
+      "permanent": "1"
+    },
+    {
+      "name": "Readings",
+      "notes": "#Ch 9...",
+      "status": "",
+      "permanent": "1"
+    },
+    {
+      "name": "Short Answer 1",
+      "notes": "#done",
       "status": "",
       "permanent": "0"
     },
     {
-      "name": "discussion",
-      "notes": "#",
+      "name": "Short Answer 2",
+      "notes": "#200-250 words\n#create a fictional scenario in which conflict exists. \n#describe a fictional example of a conflict in either home or work life to which one of the following two could apply: willingness to sacrifice; and turning the other cheek.\n#explain how the technique plays out for the chars in your example.\n#what is the outcome of the technique in the scenario\n#what factors caused the technique to succeed or fail",
       "status": "",
       "permanent": "0"
     }

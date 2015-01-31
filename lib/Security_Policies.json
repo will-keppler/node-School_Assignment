@@ -4,14 +4,20 @@
   "total_weeks": "12",
   "assignments": [
     {
-      "name": "Forum",
-      "notes": "#Posted my response....\n\n#Respond to 2 others",
+      "name": "Tomorrow",
+      "notes": "#Keep working on project...\n\n#Take final exam...",
       "status": "",
       "permanent": "1"
     },
     {
-      "name": "Project part 1",
-      "notes": "#Started the reading...\n#FInish reading chs...\n\n#p567\n\n#finished the reading",
+      "name": "Readings",
+      "notes": "#",
+      "status": "",
+      "permanent": "1"
+    },
+    {
+      "name": "Project",
+      "notes": "#finish the draft...\n\n#write in word document...",
       "status": "",
       "permanent": "0"
     }

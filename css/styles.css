@@ -1,7 +1,7 @@
 
 body {
  background-color: white;
- max-width: 600px;
+ max-width: 400px;
 }
 
 /*The assignment containers*/
@@ -42,7 +42,7 @@ ul li a{
 .notes {
  width: 90%;
  height: 400px;
- font-size: 30px;
+ font-size: 20px;
  margin: 2px;
  margin-left: 5px;
  line-height: 30px;
@@ -59,6 +59,6 @@ div.bx-viewport[style]{
  width: 300px;
  position: fixed;
  left: 300px;
- top: 200px;
+ top: 50px;
 }
 
