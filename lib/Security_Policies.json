@@ -14,24 +14,6 @@
       "notes": "#",
       "status": "",
       "permanent": "1"
-    },
-    {
-      "name": "Project",
-      "notes": "#finish the draft...\n\n#write in word document...",
-      "status": "",
-      "permanent": "0"
-    },
-    {
-      "name": "Test",
-      "notes": "This is a test",
-      "status": "",
-      "permanent": "0"
-    },
-    {
-      "name": "Another Test",
-      "notes": "This is another test",
-      "status": "",
-      "permanent": "0"
     }
   ]
 }

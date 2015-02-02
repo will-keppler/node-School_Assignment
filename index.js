@@ -1,35 +1,31 @@
 "use strict";
 var express = require('express');
 var	app = express();
-//var server = require('http').Server(app);
 var io = require('socket.io').listen(app.listen(3000));
 var fs = require('fs');
 var jf = require('jsonfile');
 var bodyParser = require('body-parser');
-var jsonObjects = [];//For storing the json Objects in the /lib dir.
+var jsonObjects = [];//For storing the json Objects from the /lib dir.
 var jadeAssignments = [];//For storing objects being passed to jade
-var tab1_name = "";//want to use this to store the names of the classes
-                        //and remove the hard coded strings 
-var tab2_name = "";//variable to hold the name of the second tab name
+var tab1_name = "";
+var tab1_object = {};
+var tab2_name = "";
+var tab2_object = {};
 
 //set up the app================================
-//app view engine
 app.set('view engine', 'jade');
-
 app.use('/js', express.static(__dirname + '/js'));
 app.use('/css', express.static(__dirname + '/css'));
-app.use(bodyParser.urlencoded({extended:true}));//No longer get the error after I added
-                                                //.urlencoded({extended:true})
+app.use(bodyParser.urlencoded({extended:true}));
+                                                
 //routes =========================================
 app.get('/', function(req, res){
-    //Check if jsonObjects.length > 0
-    //if jsonObjects.length > 0 then jsonObjects = [];
         jsonObjects = [];
         jadeAssignments = [];
-        //call load_lib_files
+        //call load_lib_files to load the /lib/.json files/objects into memory
         load_lib_files();
 
-	res.render('index.jade', { //This is the object I'm passign to jade.
+	res.render('index.jade', { 
 	class1_title: tab1_name,
 	class1: jadeAssignments[0],
 	class2_title: tab2_name,
@@ -37,20 +33,16 @@ app.get('/', function(req, res){
 	});
     
 //If you add more tabs you would need to create additional variables
-//and add the jadeAssignments[2] in numerical order.
+//var class3_title, class 3, tab3_name, tab3_object, etc.
 });
 
-//This route is for adding a new assignment to a class
-//it will call the / page after you add the assignment; and will show up as soon as its 
-//done loading.
+//This route is called when the user presses [new Assignment] button
 app.post('/newAssignment', function(req, res){//app.post because it is creating a new assignment object.
-    //THese are the variables collected from user input
+    //These are the variables collected from user input
 	var asign_name = req.body.assignment_name,
 	active_tab = req.body.active_class_variable,
 	notes = req.body.initial_notes,
     asign_obj_template = { "name": asign_name, "notes": notes, "status":"", "permanent": "0" };
-    
-    console.log("app.post(); active_tab = " + active_tab);
     
     //Loop through the jsonObjects[]
     for(var i = 0; i < jsonObjects.length; i++){
@@ -58,19 +50,15 @@ app.post('/newAssignment', function(req, res){//app.post because it is creating 
             o = jsonobj['class'].toString().trim(), //the current json objects 'class' value
             a = active_tab.toString().trim(); //the current tab
 
-        if((o.indexOf(a)) >= 0){//If current jsonObject[i]["class"] == active_tab {WANT NEW NAMES FOR THESE VARIABLES}
+        if((o.indexOf(a)) >= 0){
             //This is the object we need to add #{asign_obj_template} to jsonobject.assignments
-            console.log("=================jsonobj[class] == active_tab " + o);
             var file_path = __dirname + "/lib/" + active_tab.trim().replace(" ", "_") + ".json";
-            console.log("app.post(); file_path = " + file_path);
+        
             //Now i have to add the new obj to the 'assignments' of the current json object
-            console.log(JSON.stringify(jsonobj['assignments']));
             jsonobj['assignments'].push(asign_obj_template);
-            console.log(JSON.stringify(jsonobj['assignments']));
             //write the new jsonobj to the correct file
             jf.writeFileSync(file_path, jsonobj);
             
-            console.log("jsonObjects[0] = " + JSON.stringify(jsonObjects[0]));
         }//end if
      
     }//end for
@@ -78,17 +66,21 @@ app.post('/newAssignment', function(req, res){//app.post because it is creating 
     //redirect to main page so the new assignment is accessible
 	res.redirect('/');
 });
+
 //=================================================================
 //socket.io connection
 io.on('connection', function(socket){
-    console.log("connection to socket.io; socket.client = " + socket.client);
     
+    //THis event is when the user presses the [+] button to save changed notes
     socket.on('saveAssignment', function(data){
 
         var file_name = JSON.parse(data)['active_class'].trim(),
             new_Notes = JSON.parse(data)['new_notes'];
         
-        //Loop through jsonObjects 
+        //Loop through jsonObjects and set the assignments_[i]['notes'] = new_Notes[i]
+        //Want to change this by using the tab1/tab2_objects
+        //if file_name/active_class == tab1_name then use tab1_object
+        //This will eliminate 3 loops over the jsonObjects object through out the program
         for(var i = 0; i < jsonObjects.length; i++){
             var jsonobj = jsonObjects[i],
             o = jsonobj['class'].trim().toString();
@@ -98,23 +90,25 @@ io.on('connection', function(socket){
                 //Then I can get the assignments and update the notes.
                 for(var i = 0; i < assignments_.length; i++){
                     assignments_[i]['notes'] = new_Notes[i];
-                    console.log("assignments_[i][notes] = " + assignments_[i]['notes']);
+                    //console.log("assignments_[i][notes] = " + assignments_[i]['notes']);
                 }
             }
             jf.writeFileSync(file_path, jsonobj);
         }//end for loop jsonObjects[]
     });
     
+    //This event is called when the user presses the [next week] button
+    //This removes all of the assignment containers that are not marked 'permanent'
     socket.on('next_week', function(current_tab){
          var current_class = JSON.parse(current_tab);
-        console.log("socket.on(next_week); current_class = " + current_class['_class']);
+        
+        //This loops through the jsonObjects again
+        //Could use the tab1_object/tab2_object to eliminate this loop
         for(var i = 0; i < jsonObjects.length; i++){
             var jsonobj = jsonObjects[i];
             var new_assignments = [];
             var jsonobj_class = jsonobj['class'].trim().toString();
-            console.log("socket.on(next_week); jsonobj = " + jsonobj);
-            console.log("socket.on(next_week); jsonobj_class = " + jsonobj_class);
-            //break;
+            
             if(current_class['_class'].indexOf(jsonobj_class) >= 0){
                 var jsonasign = jsonobj['assignments'];
                 for(var i = 0; i < jsonasign.length; i++){
@@ -133,6 +127,7 @@ io.on('connection', function(socket){
         }//end of for loop
     });
 });
+
 //=================================================================
 //load_lib_files() to populate jsonObjects[] from json objects saved in files in /lib
 function load_lib_files(){
@@ -142,7 +137,8 @@ var lib_files = fs.readdirSync('./lib');
 //This loops through all the lib_files and uses jsonfile module to 
 //read them. Then for the contents in each file, they are pushed onto
 //an array that is going to contain all the jsonObjects i need for the 
-//assignment objects. This may become its own function as well
+//assignment objects. 
+//THis should be the only loop through the /lib/.json files
 for(var i = 0; i < lib_files.length; i++){
 	var file = __dirname + '/lib/' + lib_files[i];
 	jsonObjects.push(jf.readFileSync(file));
@@ -156,15 +152,19 @@ for(var i = 0; i < jsonObjects.length; i++){
 
     if(i === 0){
         tab1_name = jsonObjects[i]['class'];
+        tab1_object = jsonObjects[i];
         //This is where i should set tab1_object = jsonObjects[i]
         //Do the same for tab2_name; tab2_object = jsonObjects[i]
         //This way I shouldnt have to loop through jsonObjects anymore.
         //Just compare it to tab1_name...if it matches, use tab1_object
         console.log("tab1_name = " + tab1_name);
+        console.log("tab1_object = " + JSON.stringify(tab1_object));
     }
     if(i === 1){
         tab2_name = jsonObjects[i]['class'];
+        tab2_object = jsonObjects[i];
         console.log("tab2_name = " + tab2_name);
+        console.log("tab2_object = " + JSON.stringify(tab2_object));
     }
 }
-}
+}//end load_lib_files()
