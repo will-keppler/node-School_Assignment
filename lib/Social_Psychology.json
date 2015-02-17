@@ -3,17 +3,17 @@
   "current_week": "3",
   "total_weeks": "12",
   "assignments": [
-      {
+    {
       "name": "Tomorrow",
-      "notes": "#",
       "status": "",
-      "permanent": "1"
+      "permanent": "1",
+      "notes": "#"
     },
     {
       "name": "Readings",
-      "notes": "#",
       "status": "",
-      "permanent": "1"
+      "permanent": "1",
+      "notes": "#"
     }
   ]
 }

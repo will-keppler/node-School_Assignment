@@ -3,28 +3,27 @@
 2 info using npm@1.2.15
 3 info using node@v0.10.2
 4 verbose read json /media/BACKUP/Programming/Node/Node_Programs/bxslider_School_Web_App/package.json
-5 warn package.json School_Web_App@0.0.1 No README.md file found!
-6 verbose run-script [ 'prestart', 'start', 'poststart' ]
-7 info prestart School_Web_App@0.0.1
-8 info start School_Web_App@0.0.1
-9 verbose unsafe-perm in lifecycle true
-10 silly exec sh "-c" "node index.js"
-11 silly sh,-c,node index.js,/media/BACKUP/Programming/Node/Node_Programs/bxslider_School_Web_App spawning
-12 info School_Web_App@0.0.1 Failed to exec start script
-13 error School_Web_App@0.0.1 start: `node index.js`
-13 error `sh "-c" "node index.js"` failed with 8
-14 error Failed at the School_Web_App@0.0.1 start script.
-14 error This is most likely a problem with the School_Web_App package,
-14 error not with npm itself.
-14 error Tell the author that this fails on your system:
-14 error     node index.js
-14 error You can get their info via:
-14 error     npm owner ls School_Web_App
-14 error There is likely additional logging output above.
-15 error System Linux 3.12.35+
-16 error command "/opt/node/bin/node" "/opt/node/bin/npm" "start"
-17 error cwd /media/BACKUP/Programming/Node/Node_Programs/bxslider_School_Web_App
-18 error node -v v0.10.2
-19 error npm -v 1.2.15
-20 error code ELIFECYCLE
-21 verbose exit [ 1, true ]
+5 verbose run-script [ 'prestart', 'start', 'poststart' ]
+6 info prestart School_Web_App@0.0.1
+7 info start School_Web_App@0.0.1
+8 verbose unsafe-perm in lifecycle true
+9 silly exec sh "-c" "node index.js"
+10 silly sh,-c,node index.js,/media/BACKUP/Programming/Node/Node_Programs/bxslider_School_Web_App spawning
+11 info School_Web_App@0.0.1 Failed to exec start script
+12 error School_Web_App@0.0.1 start: `node index.js`
+12 error `sh "-c" "node index.js"` failed with 8
+13 error Failed at the School_Web_App@0.0.1 start script.
+13 error This is most likely a problem with the School_Web_App package,
+13 error not with npm itself.
+13 error Tell the author that this fails on your system:
+13 error     node index.js
+13 error You can get their info via:
+13 error     npm owner ls School_Web_App
+13 error There is likely additional logging output above.
+14 error System Linux 3.12.35+
+15 error command "/opt/node/bin/node" "/opt/node/bin/npm" "start"
+16 error cwd /media/BACKUP/Programming/Node/Node_Programs/bxslider_School_Web_App
+17 error node -v v0.10.2
+18 error npm -v 1.2.15
+19 error code ELIFECYCLE
+20 verbose exit [ 1, true ]

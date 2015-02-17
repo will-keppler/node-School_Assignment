@@ -6,16 +6,21 @@ $(document).ready(function(){
   	$('.bxslider').bxSlider({
 		mode: 'horizontal',
 		slideWidth: 350,
-		slideMargin: 40,
+		slideMargin: 30,
         maxSlides: 1,
 		pager: false,
 		controls: true,
-		adaptiveHeight: true,
-
+		adaptiveHeight: true
 	});
 
 
     socket = io.connect('http://192.168.1.20:3000');
+    
+    //socket.io.on(reload) to automatically reload the browser page.
+    socket.on('reload', function(data){
+        console.log("In socket.on reload");
+        location.reload();
+    });
 });
 
 //#add_assignment.click is called when the user presses the [+] button. It sets the name of the
@@ -33,8 +38,15 @@ $("#save_assignment").click(function(){
     console.log("#save_assignment button clicked.");
     var asignment_objects = [];//variable to store the assignment objects i want to save.
     var active_class_tab = $("li.active").text().trim();//get the current 'active' class
-    
-    if(active_class_tab === "Security Policies"){//want to remove hard coded string...
+    //Set variables for the tab names to remove hard coded strings
+    var tab_names = $("li a"); //Save all of the tab names.
+    var tab1_name = tab_names[0].text;
+    var tab2_name = tab_names[1].text;
+    //If you add more tabs you have to add variables to hold their names
+    console.log(tab1_name);
+    console.log(active_class_tab);
+    if(active_class_tab === tab1_name.trim()){//want to remove hard coded string...
+        console.log("#save_Assignments; inside if");
         $("#class1 li.assignment_container textarea").each(function( index ){
             if(($(this).parent().parent().attr("class")).search("bx-clone") > 0){
                 //Dont do anything
@@ -43,7 +55,7 @@ $("#save_assignment").click(function(){
                 asignment_objects.push($(this).val());
             }
         });
-    }else if(active_class_tab.trim() === "Social Psychology"){//want to remove hard coded string...
+    }else if(active_class_tab.trim() === tab2_name.trim()){//want to remove hard coded string...
         $("#class2 li.assignment_container textarea").each(function( index ){
             if(($(this).parent().parent().attr("class")).search("bx-clone") > 0){
                 //Dont do anything

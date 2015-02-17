@@ -40,11 +40,11 @@ app.get('/', function(req, res){
 app.post('/newAssignment', function(req, res){//app.post because it is creating a new assignment object.
     //These are the variables collected from user input
 	var asign_name = req.body.assignment_name,
-	active_tab = req.body.active_class_variable,
-	notes = req.body.initial_notes,
+	active_tab = req.body.active_class_variable,//the active tab sent from client socket
+	notes = req.body.initial_notes, //Initial notes for the new assignment sent from client socket
     asign_obj_template = { "name": asign_name, "notes": notes, "status":"", "permanent": "0" };
     
-    //Loop through the jsonObjects[]
+   /* //Loop through the jsonObjects[]
     for(var i = 0; i < jsonObjects.length; i++){
         var jsonobj = jsonObjects[i],
             o = jsonobj['class'].toString().trim(), //the current json objects 'class' value
@@ -53,7 +53,7 @@ app.post('/newAssignment', function(req, res){//app.post because it is creating 
         if((o.indexOf(a)) >= 0){
             //This is the object we need to add #{asign_obj_template} to jsonobject.assignments
             var file_path = __dirname + "/lib/" + active_tab.trim().replace(" ", "_") + ".json";
-        
+            console.log("app.post(newAssignment(); file_path = " + file_path);
             //Now i have to add the new obj to the 'assignments' of the current json object
             jsonobj['assignments'].push(asign_obj_template);
             //write the new jsonobj to the correct file
@@ -61,9 +61,25 @@ app.post('/newAssignment', function(req, res){//app.post because it is creating 
             
         }//end if
      
-    }//end for
+    }//end for*/
+
+    if (active_tab.trim() === tab1_name.trim()){
+        console.log("use tab1_object");
+        var file_path = __dirname + "/lib/" + active_tab.trim().replace(" ", "_") + ".json";
+        tab1_object['assignments'].push(asign_obj_template);//add the new assignment to the 'assignments' array.
+        console.log("tab 1 assignments = " + tab1_object['assignments']);
+        jf.writeFileSync(file_path, tab1_object);
+    }else if (active_tab.trim() === tab2_name.trim()){
+        console.log("use tab2_object");
+        var file_path = __dirname + "/lib/" + active_tab.trim().replace(" ", "_") + ".json";
+        tab2_object['assignments'].push(asign_obj_template);//add the new assignment to the 'assignments' array.
+        console.log("tab 2 assignments = " + tab2_object['assignments']);
+        jf.writeFileSync(file_path, tab2_object);
+    }
     
     //redirect to main page so the new assignment is accessible
+    //here i should be able to call io.sockets.emit('reload', {}); to reload the page
+    //see if it works after the [next_week] button is pressed...........
 	res.redirect('/');
 });
 
@@ -74,18 +90,21 @@ io.on('connection', function(socket){
     //THis event is when the user presses the [+] button to save changed notes
     socket.on('saveAssignment', function(data){
 
-        var file_name = JSON.parse(data)['active_class'].trim(),
+        var tab_name = JSON.parse(data)['active_class'].trim(),
             new_Notes = JSON.parse(data)['new_notes'];
-        
+        console.log("saveAssignment; new_Notes = " + JSON.stringify(new_Notes));
         //Loop through jsonObjects and set the assignments_[i]['notes'] = new_Notes[i]
         //Want to change this by using the tab1/tab2_objects
         //if file_name/active_class == tab1_name then use tab1_object
         //This will eliminate 3 loops over the jsonObjects object through out the program
-        for(var i = 0; i < jsonObjects.length; i++){
+        /*for(var i = 0; i < jsonObjects.length; i++){
             var jsonobj = jsonObjects[i],
             o = jsonobj['class'].trim().toString();
             var assignments_ = jsonobj['assignments'];
             var file_path = __dirname + "/lib/" + file_name.replace(" ", "_") + ".json";
+            
+            console.log("saveAssignment; file_path = " + file_path);
+            
             if((o.indexOf(file_name) >= 0)){
                 //Then I can get the assignments and update the notes.
                 for(var i = 0; i < assignments_.length; i++){
@@ -94,7 +113,30 @@ io.on('connection', function(socket){
                 }
             }
             jf.writeFileSync(file_path, jsonobj);
-        }//end for loop jsonObjects[]
+        }//end for loop jsonObjects[]*/
+        
+        if (tab_name === tab1_name.trim()){
+            console.log("use tab1_object");
+            var file_path = __dirname + "/lib/" + tab_name.trim().replace(" ", "_") + ".json";
+            var asign_length = tab1_object['assignments'].length;
+            for(var i =0; i < asign_length; i++){
+                tab1_object['assignments'][i]['notes'] = new_Notes[i];
+            }
+            
+            console.log("tab 1 assignments = " + tab1_object);
+            jf.writeFileSync(file_path, tab1_object);
+        }else if (tab_name === tab2_name.trim()){
+            console.log("use tab2_object");
+            var file_path = __dirname + "/lib/" + tab_name.trim().replace(" ", "_") + ".json";
+            var asign_length = tab2_object['assignments'].length;
+            for(var i =0; i < asign_length; i++){
+                tab2_object['assignments'][i]['notes'] = new_Notes[i];
+            }
+            
+            console.log("tab 2 assignments = " + tab2_object['assignments']);
+            jf.writeFileSync(file_path, tab2_object);
+    }
+        
     });
     
     //This event is called when the user presses the [next week] button
@@ -125,6 +167,8 @@ io.on('connection', function(socket){
                 break;
             }
         }//end of for loop
+        //Call reload event on client side to reload the page.
+        io.sockets.emit('reload', {});
     });
 });
 
@@ -146,17 +190,14 @@ for(var i = 0; i < lib_files.length; i++){
 }
 
 for(var i = 0; i < jsonObjects.length; i++){
-    
+    var jsonAsign = jsonObjects[i]['assignments'];
+    console.log("jsonObjects[i][assignments] = " + JSON.stringify(jsonAsign));
     //Add the assignments to jadeAssignments[]...
-    jadeAssignments.push(jsonObjects[i]["assignments"]);
+    jadeAssignments.push(jsonAsign);
 
     if(i === 0){
         tab1_name = jsonObjects[i]['class'];
         tab1_object = jsonObjects[i];
-        //This is where i should set tab1_object = jsonObjects[i]
-        //Do the same for tab2_name; tab2_object = jsonObjects[i]
-        //This way I shouldnt have to loop through jsonObjects anymore.
-        //Just compare it to tab1_name...if it matches, use tab1_object
         console.log("tab1_name = " + tab1_name);
         console.log("tab1_object = " + JSON.stringify(tab1_object));
     }

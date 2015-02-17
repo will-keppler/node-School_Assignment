@@ -2,14 +2,16 @@
 
 #####ToDo:
 * Refactor JavaScript code
-* After [next_week] button is pressed...I need to refresh the browser to reflect the changes.
-* Move the button bar on top of the assignment container
 * Want to put the number of slides total for each class
-* Have a notification after [save] is pressed
+* Have a notification pop up after [save] is pressed, for confirmation
 * Want a way to keep track of the current week/total weeks of each class
 * Need a way to set the 'permanent' attribute on each assignment container
 * Want a way to be able to delete assignments individually
-*Want to move the 'next/prev' buttons in the middle of the bottom of the assignment containers. Also, make the bigger so they are easier to press on a phone
+* Want to move the 'next/prev' buttons in the middle of the bottom of the assignment containers. Also, make them bigger so they are easier to press on a phone
+* Add a pop-up "Are you sure?" after pressing the [next week] button. So, if it is accidentally pressed the user
+can cancel the action.
+* Move the app.post('/newAssignment') to a socket.on event
+* Add a home screen Icon for mobile devices
 
 #####Client Tests:
 * Add a new assignment to a class
@@ -20,6 +22,9 @@
 * 
 
 #####Features:
+* Keep track of assignments for each class
+* Add assignments one at a time
+* When I reach a new week, [next week] will reset/remove all assignments not marked 'permanent'
 * 
 
 #####The App:
@@ -36,5 +41,3 @@ The data is saved in Json files on the server so when a client connects, no matt
 Change the 'permanent' attribute on an assignment: Change...have to manually change this right now. Open the json file in the /lib directory and find the assignment you want to change; and change the value from 0 to 1. 
 
 To change a class/tab: Change...This also has to be manually done by changing the correct json file to the new name of the new class, and delete all the assignments. I want to add a way for the user to make a new class....or replace one class with a new class.
-
-Displaying School.txt.
