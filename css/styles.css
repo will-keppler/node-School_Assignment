@@ -62,3 +62,18 @@ div.bx-viewport[style]{
  top: 50px;
 }
 
+/*===========================================*/
+/*This is for the radio button, label, and assignment name to display them inline and at the top of the 
+assignment container.*/
+h3 {
+ display: inline;
+ margin-right: 60px;
+}
+
+label {
+ display: inline;
+}
+
+.toggle-permanent {
+ display: inline;
+}

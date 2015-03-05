@@ -1,5 +1,8 @@
 for b in class2
  li.assignment_container(style="width: 100%")
-  h3 #{b["name"]}
+   div.input-group
+    h3 #{b["name"]}
+    input(type="checkbox", class="toggle_permanent", value="Permanent", id="Permanent")
+    label(for="Permanent", class="toggle_permanent") Permanent
    textarea(class="notes" id="assignment_notes" name="assignment_notes") #{b["notes"]}
 
