@@ -7,19 +7,13 @@
       "name": "Tomorrow",
       "status": "",
       "permanent": "1",
-      "notes": "#Do forum...\n\n#Take final exam..."
+      "notes": ""
     },
     {
       "name": "Readings",
       "status": "",
       "permanent": "1",
       "notes": ""
-    },
-    {
-      "name": "Forum",
-      "notes": "#Posted my response\n\n#Respond to 2 others....",
-      "status": "",
-      "permanent": "0"
     }
   ]
 }

@@ -77,3 +77,9 @@ label {
 .toggle-permanent {
  display: inline;
 }
+
+
+.bx-viewport {
+ padding-bottom: 10px;
+ margin-right: 30px;
+}

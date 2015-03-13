@@ -45,22 +45,24 @@ $("#save_assignment").click(function(){
     //If you add more tabs you have to add variables to hold their names
     console.log(tab1_name);
     console.log(active_class_tab);
-    if(active_class_tab === tab1_name.trim()){//want to remove hard coded string...
+    if(active_class_tab === tab1_name.trim()){
         console.log("#save_Assignments; inside if");
         $("#class1 li.assignment_container textarea").each(function( index ){
-            if(($(this).parent().parent().attr("class")).search("bx-clone") > 0){
+            if(($(this).parent().attr("class")).search("bx-clone") > 0){
                 //Dont do anything
             }else {
                 //add these assignment objects values to the asignment_objects[] object
+                //console.log($(this).parent());
                 asignment_objects.push($(this).val());
             }
         });
-    }else if(active_class_tab.trim() === tab2_name.trim()){//want to remove hard coded string...
+    }else if(active_class_tab.trim() === tab2_name.trim()){
         $("#class2 li.assignment_container textarea").each(function( index ){
-            if(($(this).parent().parent().attr("class")).search("bx-clone") > 0){
+            if(($(this).parent().attr("class")).search("bx-clone") > 0){
                 //Dont do anything
             }else {
                 //add these assignment objects values to the asignment_objects[] object
+                console.log($(this).parent());
                 asignment_objects.push($(this).val());
             }
         });
@@ -76,3 +78,24 @@ $("#next_week").click(function(){
     
     socket.emit('next_week', JSON.stringify({_class: active_class }));
 });
+/*
+//Listener for when checkboxes change
+$(":checkbox").change(function(){
+    if($(this).is(":checked")){
+        //alert("A checkbox just changed");
+        active_class = $("li.active").text().trim();//get the current 'active' class
+        var tab1_name = tab_names[0].text;
+        var tab2_name = tab_names[1].text;
+        
+        if(active_class === tab1_name.trim()){
+        console.log(":checkbox.change; inside if");
+        $("#class1 li.assignment_container").each(function( index ){
+            
+        });
+    }else if(active_class_tab.trim() === tab2_name.trim()){
+        $("#class2 li.assignment_container textarea").each(function( index ){
+            
+        });
+    }
+    }
+});*/

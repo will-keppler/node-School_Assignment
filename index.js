@@ -119,7 +119,7 @@ io.on('connection', function(socket){
             console.log("use tab1_object");
             var file_path = __dirname + "/lib/" + tab_name.trim().replace(" ", "_") + ".json";
             var asign_length = tab1_object['assignments'].length;
-            for(var i =0; i < asign_length; i++){
+            for(var i = 0; i < asign_length; i++){
                 tab1_object['assignments'][i]['notes'] = new_Notes[i];
             }
             
@@ -128,13 +128,20 @@ io.on('connection', function(socket){
         }else if (tab_name === tab2_name.trim()){
             console.log("use tab2_object");
             var file_path = __dirname + "/lib/" + tab_name.trim().replace(" ", "_") + ".json";
+            console.log("file_path = " + file_path);
             var asign_length = tab2_object['assignments'].length;
             for(var i =0; i < asign_length; i++){
                 tab2_object['assignments'][i]['notes'] = new_Notes[i];
             }
             
-            console.log("tab 2 assignments = " + tab2_object['assignments']);
+            console.log("tab 2 assignments = " + JSON.stringify(tab2_object['assignments']));
+            console.log("before call to write to file...");
             jf.writeFileSync(file_path, tab2_object);
+            /*jf.writeFile(file_path, tab2_object, function(err){
+                if (err) throw err;
+                console.log("inside .writeFile....if this shows---then no error.");
+            });*/
+            console.log("after call to write to file...");
     }
         
     });
