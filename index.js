@@ -177,6 +177,10 @@ io.on('connection', function(socket){
         //Call reload event on client side to reload the page.
         io.sockets.emit('reload', {});
     });
+    
+    //THis event will be check_changed, so each time a checkbox is checked or unchecked
+    //this event will fire and update the .json file assignment.permanent attributes
+    //socket.on('check_changed');
 });
 
 //=================================================================

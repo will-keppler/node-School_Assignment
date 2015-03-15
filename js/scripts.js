@@ -57,6 +57,7 @@ $("#save_assignment").click(function(){
             }
         });
     }else if(active_class_tab.trim() === tab2_name.trim()){
+        //going to change this to use the :not()...
         $("#class2 li.assignment_container textarea").each(function( index ){
             if(($(this).parent().attr("class")).search("bx-clone") > 0){
                 //Dont do anything
@@ -78,24 +79,34 @@ $("#next_week").click(function(){
     
     socket.emit('next_week', JSON.stringify({_class: active_class }));
 });
-/*
+
 //Listener for when checkboxes change
 $(":checkbox").change(function(){
-    if($(this).is(":checked")){
-        //alert("A checkbox just changed");
-        active_class = $("li.active").text().trim();//get the current 'active' class
-        var tab1_name = tab_names[0].text;
-        var tab2_name = tab_names[1].text;
-        
-        if(active_class === tab1_name.trim()){
-        console.log(":checkbox.change; inside if");
-        $("#class1 li.assignment_container").each(function( index ){
-            
-        });
-    }else if(active_class_tab.trim() === tab2_name.trim()){
-        $("#class2 li.assignment_container textarea").each(function( index ){
-            
-        });
+    active_class = $("li.active").text().trim(); //Get the active class
+    //these tab_names can be moved to the 'global' scope so they do not need to be declaired
+    //in each function...
+    var tab1_name = tab_names[0].text;
+    var tab2_name = tab_names[1].text;
+    //Get the assignment objects for the right class
+    //for now just use class1; but use an if statement to determine what to use...
+    var asin_objects = $("#class1 li.assignment_container:not(li.assignment_container.bx-clone)");
+    var temp = [];//hold h3text, and chkBool in an array and push the array into the object 
+    //Ill send to the server
+    var final_array = [];//the array/object to send to the server
+    
+    //loop through the asin_objects and store the assignment name and true/false for checkbox
+    for (var i = 0; i < asin_objects.length; i++){
+        var this_ = asin_objects[i];
+        var h3text = this_.childNodes[1].childNodes[0].textContent;
+        //var chkBool = this_.childNodes[1].childNodes[1].hasAttribute("checked");
+        var chkBool = this_.childNodes[1].childNodes[1].checked;
+        console.log("h3text = " + h3text + "; chkBool = " + chkBool);
+        temp.push(h3text, chkBool);
+        final_array.push(temp);
+        temp = [];
     }
-    }
-});*/
+    console.log(final_array);
+    console.log(active_class);
+    //emit an event that sends the active_class, final_array to the server
+    //the event is check_changed
+});
