@@ -83,18 +83,66 @@ $("#next_week").click(function(){
 //Listener for when checkboxes change
 $(":checkbox").change(function(){
     active_class = $("li.active").text().trim(); //Get the active class
+    console.log(":checkbox; active_class = " + (active_class === "Ethics"));//true
     //these tab_names can be moved to the 'global' scope so they do not need to be declaired
     //in each function...
-    var tab1_name = tab_names[0].text;
-    var tab2_name = tab_names[1].text;
+    var tab_names = $("li a"); //Save all of the tab names. This should be available to all/global....
+    var tab1_name = tab_names[0].text.trim();
+    var tab2_name = tab_names[1].text.trim();
+    console.log(":checkbox; tab_names = " + tab1_name + " : " + tab2_name);
     //Get the assignment objects for the right class
     //for now just use class1; but use an if statement to determine what to use...
-    var asin_objects = $("#class1 li.assignment_container:not(li.assignment_container.bx-clone)");
+    var asin_objects;//$("#class1 li.assignment_container:not(li.assignment_container.bx-clone)");
     var temp = [];//hold h3text, and chkBool in an array and push the array into the object 
     //Ill send to the server
     var final_array = [];//the array/object to send to the server
     
+    //Need to figure out what class is used to fill asign_objects[] variable
+    if (active_class === tab1_name) {
+        //
+        asin_objects = $("#class1 li.assignment_container:not(li.assignment_container.bx-clone)");
+        console.log("asin_objects = " + asin_objects);
+        for (var i = 0; i < asin_objects.length; i++){
+            var this_ = asin_objects[i];
+            var h3text = this_.childNodes[1].childNodes[0].textContent;
+            //var chkBool = this_.childNodes[1].childNodes[1].hasAttribute("checked");
+            var chkBool = this_.childNodes[1].childNodes[1].checked;
+            console.log("h3text = " + h3text + "; chkBool = " + chkBool);
+            temp.push(h3text, chkBool);
+            final_array.push(temp);
+            temp = [];
+        }
+        console.log(final_array);
+        console.log(active_class);
+        socket.emit('check_changed', JSON.stringify({current_class: active_class,
+                                                    permanent_collection: final_array}));
+    } else if (active_class === tab2_name) {
+        //
+        asin_objects = $("#class2 li.assignment_container:not(li.assignment_container.bx-clone)");
+        console.log("asin_objects = " + asin_objects);
+        for (var i = 0; i < asin_objects.length; i++){
+            var this_ = asin_objects[i];
+            var h3text = this_.childNodes[0].childNodes[0].textContent;
+            //var chkBool = this_.childNodes[1].childNodes[1].hasAttribute("checked");
+            var chkBool = this_.childNodes[0].childNodes[1].checked;
+            console.log("h3text = " + h3text + "; chkBool = " + chkBool);
+            temp.push(h3text, chkBool);
+            final_array.push(temp);
+            temp = [];
+        }
+        console.log(final_array);
+        console.log(active_class);
+        
+    }
+    
+    /*
+    //test emit function...
+    socket.emit('saveAssignment', JSON.stringify({active_class: active_class_tab, 
+                                                  new_notes: asignment_objects}));
+    
+    
     //loop through the asin_objects and store the assignment name and true/false for checkbox
+    asign_objects = $("#class1 li.assignment_container:not(li.assignment_container.bx-clone)");
     for (var i = 0; i < asin_objects.length; i++){
         var this_ = asin_objects[i];
         var h3text = this_.childNodes[1].childNodes[0].textContent;
@@ -109,4 +157,5 @@ $(":checkbox").change(function(){
     console.log(active_class);
     //emit an event that sends the active_class, final_array to the server
     //the event is check_changed
+    */
 });

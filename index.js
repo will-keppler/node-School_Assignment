@@ -181,6 +181,37 @@ io.on('connection', function(socket){
     //THis event will be check_changed, so each time a checkbox is checked or unchecked
     //this event will fire and update the .json file assignment.permanent attributes
     //socket.on('check_changed');
+    /*socket.emit('check_changed', JSON.stringify({current_class: active_class,
+                                                    permanent_collection: final_array}));
+    */
+    socket.on('check_changed', function(data){
+        var parsed_data = JSON.parse(data);
+        console.log("in check_changed Event; parsed_data[current_class] = " + parsed_data['current_class']);
+        console.log("in check_changed Event; parsed_data[permanent_collection][0] = " + parsed_data['permanent_collection'][0]);
+        //These are the values i was looking for.
+        //Need to check the current class
+        if (parsed_data['current_class'].trim() === tab1_name.trim()){
+            //Use tab1_object
+            console.log("inside the if ========================");
+            //var for the assignments of tab1_object
+            var obj_asignments = tab1_object['assignments'];
+            console.log("inside the if; obj_asignments = " + obj_asignments[0]['name']);
+            //loop through the obj_asignments....for each assignment
+            //Check if there is a matching assignment name in the parsed_data[permanent_collection]
+            //if the name matches check to see if the permanent attributes match
+            //if not set the permanent attribute to what was passed in
+            //if so go to the next iteration.
+            for(var i = 0; i < obj_asignments.length; i++){
+                var temp_name = obj_asignments[i]['name'].trim();
+                console.log(parsed_data['permanent_collection'][i][0]);//this should show the name --add [0]
+                if (temp_name === parsed_data['permanent_collection'][i][0].trim()) {
+                    console.log("looping through obj_asignments===================");
+                    console.log("temp_name = " + temp_name);
+                    //console.log("" + parsed_data[i]['permanent_collection']);
+                }
+            }//end for
+        }//else if (tab_name === tab2_name.trim()) This will be for the second tab...figure out the first
+    })
 });
 
 //=================================================================
