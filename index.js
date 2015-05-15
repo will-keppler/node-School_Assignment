@@ -5,6 +5,7 @@ var io = require('socket.io').listen(app.listen(3000));
 var fs = require('fs');
 var jf = require('jsonfile');
 var bodyParser = require('body-parser');
+var favicon = require('serve-favicon');
 var jsonObjects = [];//For storing the json Objects from the /lib dir.
 var jadeAssignments = [];//For storing objects being passed to jade
 var tab1_name = "";
@@ -13,10 +14,13 @@ var tab2_name = "";
 var tab2_object = {};
 
 //set up the app================================
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.set('view engine', 'jade');
 app.use('/js', express.static(__dirname + '/js'));
 app.use('/css', express.static(__dirname + '/css'));
+app.use('/public', express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended:true}));
+
                                                 
 //routes =========================================
 app.get('/', function(req, res){
@@ -205,9 +209,14 @@ io.on('connection', function(socket){
                 var temp_name = obj_asignments[i]['name'].trim();
                 console.log(parsed_data['permanent_collection'][i][0]);//this should show the name --add [0]
                 if (temp_name === parsed_data['permanent_collection'][i][0].trim()) {
-                    console.log("looping through obj_asignments===================");
+                    //console.log("looping through obj_asignments===================");
                     console.log("temp_name = " + temp_name);
                     //console.log("" + parsed_data[i]['permanent_collection']);
+                    //want to check the permanent attribute for each obj_asignments[i]['permanent']
+                    //and parsed_data['permanent_collection'][i]
+                    //if they match and have the same name they are fine leave as is
+                    //if they are different; change the obj_asignments to the value of 
+                    //the parsed_data
                 }
             }//end for
         }//else if (tab_name === tab2_name.trim()) This will be for the second tab...figure out the first
